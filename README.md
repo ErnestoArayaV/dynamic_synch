@@ -1,2 +1,3 @@
 # dynamic_synch
-Matlab with proposed dynamic synchronization algorithms.
+Matlab files with proposed dynamic synchronization algorithms.
+
