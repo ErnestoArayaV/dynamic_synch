@@ -17,7 +17,7 @@ MM1 = [sparse(n,n) B;B sparse(n,n)];
 else
 MM1 = [zeros(n) B;B zeros(n)];    
 end
-tolhardcase = 1e-4; % tolerance for hard-case
+tolhardcase = 1e-10; % tolerance for hard-case
 
 % %EA: I comment this out to focus on boundary solutions
 % p1 = pcg(A,-a,1e-12, 500); % possible interior solution

@@ -1,0 +1,20 @@
+
+
+1) For each algorithm, optimize the choice of the regularization parameter... over a grid in a dynamic 
+env approach. 
+Q: Within what boundary to discretize? Have this boundary automated.
+
+
+2) Wrapper for loops around noise levels, for a fixed configuration (eg fix n, T), for each of the noise models.
+
+3) Ranking application:
+   (a) synthetic 
+   (b) real data
+
+
+
+
+
+Future work:
+    - binary search
+    - [0, M], binary [0, M/2, M], [0, M/4, M/2, 3/4M, M]; and so on... 10 steps?

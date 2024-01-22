@@ -1,6 +1,16 @@
 # dynamic_synch
 Matlab files with proposed dynamic synchronization algorithms.
 
+
+
+- run_instance. : runs one instance of a problem; eg; 
+    run_instance(30, 10, 'outlier', 0.80, 1);
+
+- run_many_noises_wPlots.m  : runs a series of MonteCarlos, each time calling run_instance()
+
+
+
+
 # Description: 
 **main**:   -main_tests_so2.m (runs some tests with synthetic data for all algorithms below)<br><br>
 **dynamic SO2 synchronization algorithms** (names are coincident with those in the draft: 

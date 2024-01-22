@@ -12,11 +12,11 @@
 %using it in the main tests, but I don't know if we are going to have some
 %results for this in the paper. 
 
-function proj_mat= projmat_smalleigs_lap(T,val,str)
+function [proj_mat,V]= projmat_smalleigs_lap(T,val,str)
 tol=0.000001;% the sigma parameter in the the 'eigs' function. EA: so far, it's hardcoded, but it can be received as an input. 
 M = laplacian_path(T);
 if strcmp(str,'number')
-    [V,~] = eigs(M,val,tol);
+    [V,~] = eigs(M,val,tol);%in this case the 'val' amount of eigenvalues closer to 'tol'.
     proj_mat = V*V';
 elseif strcmp(str,'bound')
     [V,d] = eig(full(M),'vector');

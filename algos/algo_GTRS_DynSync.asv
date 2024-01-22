@@ -14,6 +14,7 @@ n = size(A,1)/T;
 %transform complex data to real, to feed the 'standard' TRS.
 A_re = complextoreal(A_tilde_blk-lam_trs* SMt_n_1);%this doubles de dimension.
 b_re = complextoreal(b);
+
 %apply TRS alg. globally.
 [g_trs,~] = TRSgep(-sparse(A_re),-2*b_re,speye(2*(n-1)*T),(n-1)*T);
 g_trs = realtocomplex(g_trs);%back to the complex...
