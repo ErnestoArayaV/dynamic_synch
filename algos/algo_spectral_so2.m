@@ -1,7 +1,8 @@
 %spectral algorithm for dyn. synchro. NOT included in the paper, just 
-%to have as a benchmark...
+%to have as a benchmark and heuristic for initialize ppm...
 %
-%Input: A        -Data Matrix. Size nTxnT
+%
+%Input: A        -Data Matrix. Size nTxT
 %       T        -Number of time blocks.
 %       SMt        -Smoothness matrix. Size nTxnT
 %       lam_spec -regularization parameter.

@@ -7,7 +7,8 @@ PARS.nrMetrics = 6;
 
 %% spectral algo
 if PARS.run_spectral == 1
-    g_init = algo_spectral_so2(data, PARS.E_n, PARS.T, PARS.lam);
+    g_init = algo_spectral_local(data, PARS.T);%Local spectral heuristic. NOTE: It doesn't depend on 'PARS.lam'. So it will be a horizontal line.  
+    %g_init = algo_spectral_so2(data, PARS.E_n, PARS.T, PARS.lam);
     metrics_spectral = perf_metrics(g_init, gt, PARS);  % input('xx')
 else
     g_init = NaN(PARS.n * PARS.T, 1); 
