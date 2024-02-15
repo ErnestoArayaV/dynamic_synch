@@ -19,7 +19,8 @@ addpath(genpath('algos'));
 % T = 10; % number of time blocks
 % noise_model = 'wigner'
 % noise = 0.15 %additive noise level for the spiked Wigner model
-% num_runs = 15;%number of Monte Carlo runs
+% num_runs =%fix the smoothness of the ground truth signal
+ 15;%number of Monte Carlo runs
 % p = ede density
 
 disp([' ------>>  n=' int2str(n) ' ; T=' int2str(T) '; noiseModel=' noise_model ...
@@ -55,21 +56,22 @@ PARS.run_LTRS_GMD = 1;
 % end
 % PARS.ST = ST;
 
-%EA:NOTE= code will be replaced below
-%num_small_eigs = ceil((1/n)*(T+n+ST.*((T+1)/(n*pi-pi)).^(2/3))); % smoothness in terms of number of 'low freq.' eigs. I used Transync paper rule. To be revised.
-PARS.scan_ID = 1;
+PARS.scan_ID = 3;
 if PARS.scan_ID ==1
+    %fix the smoothness of the ground truth signal
     % smoothness parameters for GT generation
-    num_small_eigs=1; (complete smooth)
+    num_small_eigs=1; %completely smooth
 elseif PARS.scan_ID ==2
-    ST = 1;
+    num_small_eigs=2; %project onto the 'low frequency' space: two first eigs 
 elseif PARS.scan_ID ==3
-     ST = sqrt(T);
+      num_small_eigs=ceil(sqrt(T));%project onto the 'low frequency' space: sqrt(T) first eigs 
 elseif PARS.scan_ID ==4
-     ST = 1/T;
+     num_small_eigs=T;%non-smooth
 end
-PARS.ST = ST;
-PARS.num_small_eigs=2;%fix the smoothness of the ground truth signal
+%EA: one can think in more options for the smoothness...
+
+
+PARS.num_small_eigs = num_small_eigs;
 
 PARS.num_iter_ppm = 10; % number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
 proj_mat = projmat_smalleigs_lap(T, PARS.num_small_eigs, 'number');

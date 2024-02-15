@@ -1,3 +1,5 @@
+%do a grid search for the regularization hyperparameter beta_reg
+
 function [ metrics75mtx, sols] = algos_DynSync_auto_beta(data, gt, PARS)
 
 XO = 0;  % turn on/off verbose.
@@ -6,10 +8,9 @@ XO = 0;  % turn on/off verbose.
 % addpath(genpath('helpers'));
 % addpath(genpath('algos'));
 % beta_reg 
-% beta_reg = 2/3;
 
 i = 0;
-beta_list = 0 : 1 : 10
+beta_list = 0:1:floor(sqrt(PARS.T)) %0 : 1 : 10 %choice of the grid
 for beta_reg = beta_list
     i=i+1;
     disp([ 'beta_reg=' num2str(beta_reg) ]);

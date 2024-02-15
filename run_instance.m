@@ -15,17 +15,8 @@ function  [  metrics, sols ] = run_instance(n, T, noise_model, noise, p)
 addpath(genpath('helpers'));
 addpath(genpath('algos'));
 
-% n = 30; % number of nodes of each comparison graph
-% T = 10; % number of time blocks
-% noise_model = 'wigner'
-% noise = 0.15 %additive noise level for the spiked Wigner model
-% num_runs = 15;%number of Monte Carlo runs
-% p = ede density
-
 disp([' ------>>  n=' int2str(n) ' ; T=' int2str(T) '; noiseModel=' noise_model ...
     '; noiseLevel=' num2str(noise) '; p=' num2str(p) ]);
-
-N = n * T;
 
 PARS.n=n;
 PARS.T=T;
@@ -55,11 +46,9 @@ PARS.run_LTRS_GMD = 1;
 % end
 % PARS.ST = ST;
 
-%EA:NOTE= code will be replaced below
-%num_small_eigs = ceil((1/n)*(T+n+ST.*((T+1)/(n*pi-pi)).^(2/3))); % smoothness in terms of number of 'low freq.' eigs. I used Transync paper rule. To be revised.
-%fix the smoothness of the ground truth signal
 PARS.scan_ID = 3;
 if PARS.scan_ID ==1
+    %fix the smoothness of the ground truth signal
     % smoothness parameters for GT generation
     num_small_eigs=1; %completely smooth
 elseif PARS.scan_ID ==2
@@ -70,6 +59,7 @@ elseif PARS.scan_ID ==4
      num_small_eigs=T;%non-smooth
 end
 %EA: one can think in more options for the smoothness...
+
 PARS.num_small_eigs = num_small_eigs;
 
 PARS.num_iter_ppm = 10; % number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
@@ -104,16 +94,10 @@ M = laplacian_path(T);
 PARS.E_n = kron(M, speye(n));
 PARS.E_n1 = kron(M, speye(n-1));
 
-% A = data 
-% n = size(data, 1)/T;
 [ A_tilde_blk, b]=subroutine_matrix_tilde_decomp(data,n,T);%decompose the matrix into its 'tilde' parts.
 PARS.A_tilde_blk = A_tilde_blk;
 PARS.b = b;
-% size(A_tilde_blk)
-% size(b)
 
-% beta_reg = 2/3
-% [ metrics ] = algos_DynSync_given_beta(beta_reg, data, gt, PARS);
 [ metrics ] = algos_DynSync_auto_beta(data, gt, PARS);
 
 disp_nice_metrics(metrics);
