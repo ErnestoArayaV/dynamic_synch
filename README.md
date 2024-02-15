@@ -12,13 +12,14 @@ Matlab files with proposed dynamic synchronization algorithms.
 
 
 # Description: 
-**main**:   -main_tests_so2.m (runs some tests with synthetic data for all algorithms below)<br><br>
+**main**:   -run_many_noises_Wplots.m (runs some tests with synthetic data for all algorithms below)<br><br>
 **dynamic SO2 synchronization algorithms** (names are coincident with those in the draft: 
-1. algo_spectral_so2.m 
-2. algo_GTRS_DynSync.m
-3. algo_LTRS_GS_DynSync.m
-4. algo_GMD_LTRS_DynSync.m
-5. algo_ppm_DynSync.m<br>
+1. algo_spectral_so2.m--used as initialization for ppm
+2. algo_spectral_local.m--idem
+3. algo_GTRS_DynSync.m
+4. algo_LTRS_GS_DynSync.m
+5. algo_GMD_LTRS_DynSync.m
+6. algo_ppm_DynSync.m<br>
                                   
 **data generation**:
 1. generate_ground_truth.m (sample random angles and impose smoothness by projection)
