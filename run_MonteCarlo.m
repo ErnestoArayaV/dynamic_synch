@@ -15,7 +15,7 @@ disp([ 'nr_runs=', int2str(nr_runs) ] );
 
 parfor i = 1:nr_runs
     rng(randseedoffset+i, 'twister');
-    MTX_metrics(:,:,i) = run_instance(n, T, noise_model, noise, p, 0);
+    MTX_metrics(:,:,i) = run_instance(n, T, noise_model, noise, p);
 end
 
 noise

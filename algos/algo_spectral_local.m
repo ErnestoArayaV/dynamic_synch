@@ -4,7 +4,7 @@
 %impose any smoothness
 %
 %
-%Input: A        -Data Matrix. Size nTxnT
+%Input: A        -Data Matrix. Size nTxn
 %       T        -Number of time blocks.
 
 %

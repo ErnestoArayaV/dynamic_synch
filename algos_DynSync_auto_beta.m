@@ -1,59 +1,109 @@
-%do a grid search for the regularization hyperparameter beta_reg
+%-----------------------------------------------------------------------------------------------------
+% algos_DynSync_auto_beta(data, gt, PARS)
+%
+%% Inputs:
+% data: nT x N data matrix
+% gt: nT x 1 vector of smooth ground truth signal
+% PARS: main structure for storing simulation related data
+%
+%% Description: 
+% for each algorithm, do a grid search over the respective regularization 
+% parameters (lambda, tau etc) and select the best parameter value via a
+% data fidelity criteria in the `stats_best_beta_by_algo ()' subroutine.
+% 
+%% Output:
+% metrics75mtx: 7 x 5 matrix where first 6 rows are performance metrics (6 currently), and 
+% last row contains optimal beta. 
+% Each column corresponds to an algorithm (5 in total currently). 
+% This matrix is computed for the best reg. parameter (via data fidelity criterion) for each algorithm
+%--------------------------------------------------------------------------------------------------------
 
-function [ metrics75mtx, sols] = algos_DynSync_auto_beta(data, gt, PARS)
+function [ metrics75mtx ] = algos_DynSync_auto_beta(data, gt, PARS)
 
-XO = 0;  % turn on/off verbose.
+disp_metrics_flag = 0;  % turn on/off verbose.
+beta_list = 0:1:floor(sqrt(PARS.T)); % choice of the grid for reg. parameters
+i = 0; % initialize counter for grid
 
-% rand('state', 123);
-% addpath(genpath('helpers'));
-% addpath(genpath('algos'));
-% beta_reg 
-
-i = 0;
-beta_list = 0:1:floor(sqrt(PARS.T)) %0 : 1 : 10 %choice of the grid
 for beta_reg = beta_list
     i=i+1;
     disp([ 'beta_reg=' num2str(beta_reg) ]);
+    
+    %
+    % For a candidate beta, run each algorithm (output is a Nr metrics x Nr algorithms matrix, 
+    % each column corresponding to an algorithm)
+    %
+    % Currently, number of metrics = 6 and number of algorithms = 5.
+    %
     [ metrics ] = algos_DynSync_given_beta(beta_reg, data, gt, PARS);
-    if XO == 1
+    
+    % Display performance metrics for each algorithm for the current beta
+    if disp_metrics_flag == 1
         disp_nice_metrics(metrics);
     end
-    MTX_metrics(:,:,i) = metrics;
-    % input('Press ''Enter'' to continue...','s');
+    
+    %
+    % Store the 6 x 5 performance matrix for the algorithms for the ith candidate
+    % value of beta
+    MTX_metrics(:,:,i) = metrics; 
 end
 
-MTX_metrics;
+%---------------------------------------------------------------------------------------
+% Plot the performance metrics {correlation, rmse, data fidelity, smoothness} vs beta
+% for each algorithm
+%----------------------------------------------------------------------------------------
 
 figure(1);  clf;  
 
-% {plot corr, rmse, dafi, smot} vs beta
+% Plot correlation versus beta for each algorithm
 corrMtx = squeeze(MTX_metrics(1, : , :))';
 subplot(2,2,1);
 plot_nice_auto_beta(corrMtx, '', 1, '', beta_list, PARS);
 
+% Plot RMSE versus beta for each algorithm
 subplot(2,2,2);
 rmseMtx = squeeze(MTX_metrics(2, : , :))';
 plot_nice_auto_beta(rmseMtx, '', 2 , '', beta_list, PARS);
 
+% Plot data fidelity versus beta for each algorithm
 subplot(2,2,3);
 dafiMtx = squeeze(MTX_metrics(5, : , :))';
 plot_nice_auto_beta(dafiMtx, '', 5 , '', beta_list, PARS);
 
+% Plot smoothness of solution versus beta for each algorithm
 subplot(2,2,4);
 smotMtx = squeeze(MTX_metrics(6, : , :))';
 plot_nice_auto_beta(smotMtx, '', 6 , '', beta_list, PARS);
 
-metrics75mtx = stats_best_beta_by_algo( MTX_metrics , beta_list);
+%
+% Return the performance metrics corresponding to the optimal beta for each
+% algorithm. Size of metrics75mtx is (Nr. of metrics + 1) x Nr. of methods
+% with the last row of metrics75mtx containing the optimal beta for each
+% algorithm.
+%
+metrics75mtx = stats_best_beta_by_algo(MTX_metrics , beta_list);
 
-% plot rmse vs beta
-% rmse = MTX_metrics(2, : , :)
-% plot(rmse);
 end
 
 
 
-
-
+%-----------------------------------------------------------------------------------------------------
+% plot_nice_auto_beta(MTX2D, plotFolder, indStat , scan_ID, beta_list, PARS)
+%
+%% Inputs:
+% scan_ID: this is not being used ?? Note that this corresponds to the typr
+% of smoothness (see run_instance.m file)
+% beta_list: list of betas on the grid
+% PARS: main structure for storing simulation related data
+% indStat: index of the metric (1 - 6 currently, see inside code for details)
+% plotFolder: path of folder where plot will be dumped
+% MTX2D: Nr. of beta x Nr. of algorithms matrix. Each column contains
+% the performance output for an algorithm for some metric.
+%
+%% Output
+%
+% For each algorithm, plot the performance metric output versus beta
+%
+%% Remark (HT): This function needs cleaning!!
 
 function plot_nice_auto_beta(MTX2D, plotFolder, indStat , scan_ID, beta_list, PARS)
 

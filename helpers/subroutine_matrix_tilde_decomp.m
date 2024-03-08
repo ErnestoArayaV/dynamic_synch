@@ -1,11 +1,15 @@
-%subroutine that finds the 'tilde' decomposition for each nxn block of
-%the data matrix A of size nTxnT, and construct a block diagonal matrix
-%out of those blocks. EA: we can cite the paper here for the specific
-%notation.
 %
-%Outputs: A_tilde_blk     -block diagonal matrix of size (n-1)Tx(n-1)T with
+% Subroutine that finds the 'tilde' decomposition for each nxn block of
+% the data matrix A of size nTxnT, and construct a block diagonal matrix
+% out of those blocks. The notation is the same as in paper
+%
+% Outputs: 
+%
+% A_tilde_blk: a block diagonal matrix of size (n-1)Tx(n-1)T with
 %                          A_tilde(k) in each block. 
-%         b               -vector b in the paper. 
+% b  : vector b in the paper. 
+%
+%
 
 function [A_tilde_blk, b]=subroutine_matrix_tilde_decomp(A,n,T)
 b = zeros((n-1)*T,1);%initialize the tall vector b

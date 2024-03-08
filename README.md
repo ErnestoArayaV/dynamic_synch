@@ -3,11 +3,10 @@ Matlab files with proposed dynamic synchronization algorithms.
 
 
 
-- run_instance. : runs one instance of a problem; eg; 
-    run_instance(30, 10, 'outlier', 0.80, 1);
+- run_instance. : runs one instance of a problem; eg; run_instance(30, 10, 'outlier', 0.80, 1);
+    
 
 - run_many_noises_wPlots.m  : runs a series of MonteCarlos, each time calling run_instance()
-
 
 
 
