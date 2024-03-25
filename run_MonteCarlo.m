@@ -1,25 +1,18 @@
 
  % run_MonteCarlo(30, 10, 'wigner', 0.10, 1, 20 )
-
+ %
  % run_MonteCarlo(30, 10, 'wigner', 0.10, 1, 3, 4 )
 
 function [avg_metrics , std_metrics] = run_MonteCarlo(n, T, noise_model, noise, p, scan_ID, nrExp)
-rng(0);
 
-randseedoffset = random('unid', 10^5) + 1;
+randseedoffset = randi(10^5) + 1;
 
-% nrExp = 20
-
-% run_instance(30, 10, 'wigner', 0.10)
 disp([ 'nrExp=', int2str(nrExp) ] ); 
 
 parfor i = 1:nrExp
     rng(randseedoffset+i, 'twister');
     MTX_metrics(:,:,i) = run_instance(n, T, noise_model, noise, p, scan_ID);
 end
-
-noise;
-MTX_metrics;
 
 avg_metrics = mean(MTX_metrics,  3 );
 std_metrics = std(MTX_metrics, 0, 3 );

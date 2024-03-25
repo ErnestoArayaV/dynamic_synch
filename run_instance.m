@@ -27,8 +27,12 @@
 
 function  [  metrics, sols ] = run_instance(n, T, noise_model, noise, p, scan_ID)
 
-rand('state', 123);
- 
+%% HT: commenting this out when using MC runs since the seed is
+%% being set outside this function. Also the path has been set outside as
+%% well.
+
+%rand('state', 123);  
+
 addpath(genpath('helpers'));
 addpath(genpath('algos'));
 
@@ -50,7 +54,7 @@ PARS.run_LTRS_GS = 1;
 PARS.run_LTRS_GMD = 1;   
 
 %% number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
-PARS.num_iter_ppm = 5; 
+PARS.num_iter_ppm = 10; 
 
 %% smoothness parameters initialization (indepenent of n)
 

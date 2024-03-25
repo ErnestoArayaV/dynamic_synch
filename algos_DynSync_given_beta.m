@@ -23,8 +23,16 @@ function [ metrics ] = algos_DynSync_given_beta(beta_reg, data, gt, PARS)
 % Lambda is a regularization parameter used in the GTRS and PPM methods, see
 % paper. The larger the value of lambda, the more smooth the solution.
 %
-PARS.lam_ppm =  0.1*beta_reg;
-PARS.lam_gtrs = 0.1*beta_reg;
+
+if PARS.run_ppm == 1
+   PARS.lam_ppm_scale = 0.5;
+   PARS.lam_ppm =  PARS.lam_ppm_scale*beta_reg;
+end
+
+if PARS.run_GTRS == 1 
+   PARS.lam_gtrs_scale = 0.5;
+   PARS.lam_gtrs = PARS.lam_gtrs_scale*beta_reg;
+end
 
 %
 % It is a reg. parameter used in the LTRS-GS AND GMD-LTRS methods. 
