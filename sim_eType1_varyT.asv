@@ -1,10 +1,11 @@
 %%  eType1:  fix n, noise, noise_model, p, scan_ID, (and nrExp).  Vary T
 
-%% Sample runs:
-
 %% Run_1:   sim_eType1_varyT(30, 'wigner', 3,  1,  1, 25)  
-%% Run_2:   sim_eType1_varyT(30, 'wigner', 3,  1,  2, 25)   
-%% Run_3:   sim_eType1_varyT(30, 'outlier', 0.2, 0.2, 1, 25);
+%% Run_2:   sim_eType1_varyT(30, 'wigner', 10,  1,  1, 3)  
+%% Run_3:   sim_eType1_varyT(30, 'wigner', 2,   1,  1, 3);
+
+
+% sim_eType1_varyT(30, 'wigner', 10,  1,  1,  3)
 
 % scan_ID \in {1,2,3};  % create a folder for each experimental setup (smoothness level)
 
@@ -15,15 +16,14 @@ disp('----> Start of sim_eType1_varyT() <------');
 addpath(genpath('helpers'));
 addpath(genpath('algos'));
 
-% Grid of time points
-T_vect = 10:15:55;
+T_vect = 10:15:130;
 
-% labels for titles within figures, and filenames
 label_nice = [ 'siD' int2str(scan_ID) ': ' noise_model ': n=' int2str(n) ', noise=' num2str(noise), ', p=' num2str(p) ' (nrExp=' int2str(nrExp ) ')'];
 label      = [ 'scan_ID' int2str(scan_ID) '_'  noise_model  '_n' int2str(n)   '_noise'  num2str(noise)   '_p' num2str(p) '_nrExp' int2str(nrExp) ];
 
 disp(label);
 fsData     = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
+
 fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
 

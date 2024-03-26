@@ -48,10 +48,10 @@ PARS.scan_ID = scan_ID;
 
 %% set to 0 if we want to disable any single algo
 PARS.run_spectral = 1;
-PARS.run_ppm = 1;
+PARS.run_ppm = 0;
 PARS.run_GTRS = 1;       
-PARS.run_LTRS_GS = 1;  
-PARS.run_LTRS_GMD = 1;   
+PARS.run_LTRS_GS = 0;  
+PARS.run_LTRS_GMD = 0;   
 
 %% number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
 PARS.num_iter_ppm = 10; 
