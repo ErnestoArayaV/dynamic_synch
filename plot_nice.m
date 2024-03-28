@@ -26,7 +26,7 @@ disp(MANY_AVG);
 size(MANY_AVG)   % metrics by algos by xaxis_vect
 MTXSTATS = permute(MANY_AVG,[1 2 3]);
 % MTXSTATS   %  algos -by- metrics -by- xaxis_vect 
-size(MTXSTATS) %  18 methods (9+9) xxx 10 stats (1noise +9)  xxx 19 xaxis_vect % MTX_STD = permute(MANY_STD,[2 1 3]) 
+size(MTXSTATS) 
 
 showtitle = 1
 log_scale = 0;
@@ -59,31 +59,11 @@ elseif indMetric == 7
     ylab = 'Beta';                     fsStatMetric = 'Beta';    
 end
 
-
-indexMethods = [ 1 2 3 4 5];  % which methods to retain for plotting 
-
-% if scan_ID == 1 ||  scan_ID == 2
-%     if indMetric == 10
-%         indexMethods = [ 1 2 3 4          8 9 10 11    ];
-%     elseif indMetric == 9 || indMetric == 2
-%         indexMethods = [ 1 2 3 4    6 7        8 9 10 11     13 14   ];
-%     end
-% elseif scan_ID == 3 || scan_ID == 4 || scan_ID == 5
-%     indMetric = 9;  ylab = 'corSc';  fsStat = 'corSc';
-%     indexMethods = [ 1 2  ];  % 3 4 5 
-%     size(MTXSTATS)
-% end
+%% which methods to retain for plotting 
+indexMethods = [2 4];  
 
 yminn = [];
 ymaxx = [];
-
-%  OLD          
-% colNames = 
-%  {'eta','perc','corrKend','nr_flips',   'tau',    'nrUpsets','NaN',   'time','corSc','RMSE'};
-%    1      2          3             4       5         6          7        8     9     10
-%  eta: percSync corrKendSync  nr_flipsSync  tauSync  nrUpsets  rankSdp   tm   corSc  RMSE
-%  ALL = squeeze(MTXSTATS(:,2,:))';
-%  DirUndir = 'ABS';
 
 MTXSTATS;  % algos 
 
@@ -98,19 +78,6 @@ size(noiseLevs);
 ALL = [noiseLevs ALL];
 MTX_STD_ALL = [noiseLevs MTX_STD_ALL];
 
-% If we want to leave out the 0 noise level (strange behaviour sometimes)
-% ALL = ALL(2:end, :);   noiseLevs = noiseLevs(2:end);
-
-% close all; figure(1);
-% figure(1); clf;
-% colMethods = {'-r.','--bx', '-k*','-.mo' , ':kd',':ms', '-c^'};
-% nrMethods = size(ALL,2) - 1;
-
-% nrMethods = nrMethods-1
-
-%legList     = {'SVD',  'SVD-N',  'RowSum',  'LS',  'SER',  'GLM',  'RC'};
-%colMethods = {'-r.',   '-ro',     '--m.',  '-c.', '-b.',  '-m.',  '-k.'};
-% color = jet(7);
 
 % Recall the ordering from algos:
 % metrics = [ metrics_spectral  metrics_ppm  metrics_gtrs  metrics_ltrs_gs  metrics_ltrs_gmd ];
@@ -140,16 +107,6 @@ magenta = [1, 0, 1]; % BTL
 % colorspec = {[0.9 0.9 0.9]; [0.8 0.8 0.8]; [0.6 0.6 0.6]; [0.4 0.4 0.4]; [0.2 0.2 0.2]};
 % linespec = {'-', ':', '-.', '--'};
 colorspec = {red; magenta; green; orange; blue}; % ; green; magenta; black; blue
-% colormap jet;
-% cmap=colormap;
-
-% indexMethods = [     8 9 10 11    ];
-% ALL = ALL( : , indexMethods+1 );
-
-%% If running into NaN data
-% allNans = sum( isnan( ALL(:,2:end) ) );
-% badPoz = find(allNans == size(ALL,1) );
-% indexMethods = setdiff(indexMethods, badPoz );
 
 if log_scale == 1
     % ALL(:,2:end) = log10(ALL(:,2:end));
@@ -157,8 +114,6 @@ if log_scale == 1
 end
 
 for i = indexMethods
-    % plot(ALL(:,1),ALL(:,1+i), colMethods{i}, 'LineWidth', 3, 'MarkerSize',15); hold on;
-    % Plot_color=cmap(5*i,:);
     Plot_color = colorspec{i};
     plot(ALL(:,1),ALL(:,1+i), 'LineStyle', linespec{i},  'Marker', markers{i}, 'LineWidth', 3, 'MarkerSize',15,   'Color', Plot_color); hold on;
     if log_scale == 1
@@ -166,12 +121,7 @@ for i = indexMethods
     else
         myYlab= [ ylab ];
     end
-    
-    % err = MTX_STD_ALL(:,1+i);
-    % errorbar(ALL(:,1),ALL(:,1+i), err, 'both', 'o', "MarkerEdgeColor", "black");  % "MarkerFaceColor", "black" , [0.65 0.85 0.90]  
 end
-
-% close all; bar(log(ALL(:,2:14))); hold on;
 
 axis tight;
 yl = ylim;
@@ -191,7 +141,6 @@ ylim(yl);
 % hx = graph2d.constantline(ALL(:,1), 'LineStyle',':', 'Color','k','LineWidth',0.3);
 % changedependvar(hx,'x');
 
-% = 1- \eta
 xlabel( xaxis_label );  ylabel(myYlab);    % axis tight;
 set(gca,'FontSize',PARS.myFont);
 
@@ -215,27 +164,13 @@ end
 h_xlabel = get(gca,'XLabel');           h_ylabel = get(gca,'YLabel');
 set(h_xlabel,'FontSize',PARS.myFont); set(h_ylabel,'FontSize',PARS.myFont);
 
-% V = axis();
-% axis( [ 0 0.8 0 min(2,V(4)) ] );
-% the_ticks = sort(unique(ARRAYCONS(1,6,:)));
-% ticklab = sort(unique(ARRAYCONS(1,6,:)));
-% set(gca,'XTick',the_ticks); set(gca,'XTickLabel',ticklab);
-
 myTitle = label_nice;  % (add other info when needed; eg log scale or other)
 % myTitle = regexprep(myTitle, '_', ': ');  disp(myTitle);
 if showtitle == 1
     title(myTitle, 'FontSize',22);
 end
-% axis tight;
 
-% input('see plot');
-% return
 
-% figure(1); FigHandle = figure(1);
-% set(FigHandle, 'Position', [100, 100, 750, 550]); set(gcf,'PaperPositionMode','auto');
-% set(indMetric, 'Position', [1000, 1000, 600, 500]);    set(gcf,'PaperPositionMode','auto');
-
-% axesPosition = get(gcf, 'Position');
 if indMetric == 2
     set(indMetric, 'Position', [ 2030        1378         794         637 ]);
 elseif indMetric == 9
@@ -243,10 +178,8 @@ elseif indMetric == 9
 elseif indMetric == 10
     set(indMetric, 'Position', [ 2832        590         794         637]);            
 end
-set(gcf,'PaperPositionMode','auto');
 
-% pos = [0.3 0.6 0.2 0.4]; % [left bottom width height]
-% xlim([0.04  0.91])
+set(gcf,'PaperPositionMode','auto');
 set(gca,'LooseInset',get(gca,'TightInset'));
 
 % label

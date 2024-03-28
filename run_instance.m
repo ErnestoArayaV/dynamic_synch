@@ -47,14 +47,30 @@ PARS.p = p;
 PARS.scan_ID = scan_ID;
 
 %% set to 0 if we want to disable any single algo
-PARS.run_spectral = 1;
-PARS.run_ppm = 0;
-PARS.run_GTRS = 1;       
-PARS.run_LTRS_GS = 0;  
+PARS.run_spectral = 0;
+PARS.run_ppm = 1;
+PARS.run_GTRS = 0;       
+PARS.run_LTRS_GS = 1;  
 PARS.run_LTRS_GMD = 0;   
 
-%% number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
-PARS.num_iter_ppm = 10; 
+%% Set PPM related parameters
+if PARS.run_ppm == 1
+   
+   % Set scale for lambda for PPM
+   PARS.lam_ppm_scale = 10;
+   
+   %% number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
+    PARS.num_iter_ppm = 10; 
+
+    %% PPM initializer
+    % Set to 'SPEC', 'GTRS', 'LTRS-GS', 'LTRS-GMD'
+    PARS.ppm_initializer = 'LTRS-GS';
+end
+
+%% Set scale for lambda for GTRS 
+if PARS.run_GTRS == 1 
+   PARS.lam_gtrs_scale = 10;
+end
 
 %% smoothness parameters initialization (indepenent of n)
 
@@ -81,6 +97,9 @@ end
 %% sparsify the graph: within each slice, only retain each edge with probability p
 %% record the number of connected components (comp_number) to ensure the union graph 
 %% is connected 
+
+%% HT: I am not sure of the point of this since we do not abort 
+%% if the union graph is not connected!
 
 [bfs_comp_vertex , comp_number, length_comp] = BFS_connected_components(G_union);
 disp([ 'comp_number=', int2str(comp_number) ]);  

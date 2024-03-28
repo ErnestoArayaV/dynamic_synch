@@ -25,12 +25,10 @@ function [ metrics ] = algos_DynSync_given_beta(beta_reg, data, gt, PARS)
 %
 
 if PARS.run_ppm == 1
-   PARS.lam_ppm_scale = 0.5;
    PARS.lam_ppm =  PARS.lam_ppm_scale*beta_reg;
 end
 
 if PARS.run_GTRS == 1 
-   PARS.lam_gtrs_scale = 0.5;
    PARS.lam_gtrs = PARS.lam_gtrs_scale*beta_reg;
 end
 

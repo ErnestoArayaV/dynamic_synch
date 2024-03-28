@@ -13,7 +13,8 @@
 %
 % `metrics', this is a matrix which stores the performance of each
 % algorithm for the different criteria (corr, rmse etc.) for the specified beta (grid value). 
-% Its size is Nr. of metrics x Nr. of algorithms
+% Its size is Nr. of metrics x Nr. of algorithms.
+% The 'ordering' of the columns is  
 %
 
 function [ metrics, sols] = algos_DynSync(data, gt, PARS)
@@ -27,21 +28,11 @@ PARS.nrMetrics = 6;
 %% spectral algo
 % Local spectral heuristic. NOTE: It doesn't depend on beta. So it will be a horizontal line.  
 if PARS.run_spectral == 1
-    g_init = algo_spectral_local(data, PARS.T);
-    metrics_spectral = perf_metrics(g_init, gt, PARS);  
+    g_spec = algo_spectral_local(data, PARS.T);
+    metrics_spectral = perf_metrics(g_spec, gt, PARS); 
 else
-    g_init = NaN(PARS.n * PARS.T, 1); 
+    g_spec = NaN(PARS.n * PARS.T, 1); 
     metrics_spectral = NaN(PARS.nrMetrics, 1); 
-end
-
-    
-%% PPM-DynSync algo: 
-if PARS.run_ppm == 1
-    g_ppm = algo_ppm_DynSync(data, PARS.E_n1, PARS.T, g_init, PARS.lam_ppm, PARS.num_iter_ppm);
-    metrics_ppm  = perf_metrics(g_ppm, gt, PARS);  %  input('xx')
-else
-    g_ppm = NaN(PARS.n * PARS.T, 1); 
-    metrics_ppm = NaN(PARS.nrMetrics, 1); 
 end
 
 
@@ -77,16 +68,41 @@ else
     metrics_ltrs_gmd = NaN(PARS.nrMetrics, 1); 
 end
 
+%% PPM-DynSync algo: 
+% Set initializer: 'SPEC', 'GTRS', 'LTRS-GS', 'LTRS-GMD'
+
+if strcmp(PARS.ppm_initializer,'SPEC')
+    g_init = g_spec;
+elseif strcmp(PARS.ppm_initializer,'GTRS')
+     g_init = g_gtrs;
+elseif strcmp(PARS.ppm_initializer, 'LTRS-GS')
+     g_init = g_ltrs_gs;
+elseif strcmp(PARS.ppm_initializer,'LTRS-GMD')
+     g_init = g_ltrs_gmd;
+else 
+    disp('incorrect initializer');
+    return;
+end
+
+% Run PPM with specified initializer
+if PARS.run_ppm == 1
+    g_ppm = algo_ppm_DynSync(data, PARS.E_n1, PARS.T, g_init, PARS.lam_ppm, PARS.num_iter_ppm);
+    metrics_ppm  = perf_metrics(g_ppm, gt, PARS);  %  input('xx')
+else
+    g_ppm = NaN(PARS.n * PARS.T, 1); 
+    metrics_ppm = NaN(PARS.nrMetrics, 1); 
+end
+
+
 %% Store solutions of the algorithms
-sols = [ g_init  g_ppm  g_gtrs  g_ltrs_gs  g_ltrs_gmd ];
+sols = [ g_spec  g_ppm  g_gtrs  g_ltrs_gs  g_ltrs_gmd ];
 
 %% Store the performance outputs for all the algorithms
 metrics = [ metrics_spectral  metrics_ppm  metrics_gtrs  metrics_ltrs_gs  metrics_ltrs_gmd ];
 
 end
-
-
 %-----------------------------------------------------------------------------------------------
+
 %% perf_metrics(est, gt, PARS)
 %
 %

@@ -16,7 +16,7 @@ addpath(genpath('helpers'));
 addpath(genpath('algos'));
 
 % Grid of time points
-T_vect = 10:15:55;
+T_vect = 10:15:130;
 
 % labels for titles within figures, and filenames
 label_nice = [ 'siD' int2str(scan_ID) ': ' noise_model ': n=' int2str(n) ', noise=' num2str(noise), ', p=' num2str(p) ' (nrExp=' int2str(nrExp ) ')'];
