@@ -47,11 +47,11 @@ PARS.p = p;
 PARS.scan_ID = scan_ID;
 
 %% set to 0 if we want to disable any single algo
-PARS.run_spectral = 0;
+PARS.run_spectral = 1;
 PARS.run_ppm = 1;
-PARS.run_GTRS = 0;       
+PARS.run_GTRS = 1;       
 PARS.run_LTRS_GS = 1;  
-PARS.run_LTRS_GMD = 0;   
+PARS.run_LTRS_GMD = 1;   
 
 %% Set PPM related parameters
 if PARS.run_ppm == 1

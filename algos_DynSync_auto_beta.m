@@ -21,7 +21,10 @@
 function [ metrics75mtx ] = algos_DynSync_auto_beta(data, gt, PARS)
 
 disp_metrics_flag = 0;  % turn on/off verbose.
+
 beta_list = 0:1:floor(sqrt(PARS.T)); % choice of the grid for reg. parameters
+%beta_list = floor(linspace(0,PARS.T,15));
+
 i = 0; % initialize counter for grid
 
 for beta_reg = beta_list

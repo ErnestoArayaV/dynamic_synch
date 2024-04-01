@@ -1,58 +1,56 @@
 %%  eType_2:  fix n, T, noise_model, p, scan_ID, (and nrExp).  Vary noise
 
 %% Run_1: sim_eType2_varyNoise(30, 10, 'wigner', 1, 1, 50)
-
 %% Run_2: sim_eType2_varyNoise(30, 50, 'wigner', 1, 1, 50)
 
-
-
-% sim_eType2_varyNoise(30, 10, 'wigner', 1, 1, 3)
-% sim_eType2_varyNoise(100, 20, 'wigner', 20)
-
 % separate extraction + plotting functionality for the above. + Heatmaps
-% T = 10:10:100
 
-% old name:  run_many_noises_wPlots
 function [ ] =  sim_eType2_varyNoise(n, T, noise_model, p, scan_ID, nrExp)
 disp('----> Start of sim_eType2_varyNoise() <------');
 addpath(genpath('helpers'));
 addpath(genpath('algos'));
 close("all"); 
 
+% Grid of noise values depending on the noise model
 if strcmp(noise_model,'wigner') == 1
-    if n <= 30 && T<=50 && p==1 && scan_ID ==1 
-        noises = 0: 0.5: 15  
-        input('see noises...');
-    end
-elseif strcmp(noise_model,'OutliersER') == 1  ||  strcmp( tipNoise, 'ERO') == 1
-    noises = 0 : 5 : 95;  noises = noises / 100;
+        noises = 0:1:10;  
+
+elseif strcmp(noise_model,'outlier') == 1 
+    noises = [0 : .05 : .5 0.6 0.7 0.8];  
+
+else
+    disp('Incorrect noise model...')
+    return;
 end
-noises
 
-% scan_ID = 1;  % create a folder for each experimental setup (smoothness level)
-
+% labels for titles within figures, and filenames
 label_nice = [ 'siD' int2str(scan_ID) ': ' noise_model ': n=' int2str(n) ', T=' int2str(T), ', p=' num2str(p) ' (nrExp=' int2str(nrExp ) ')'];
 label      = [ 'scan_ID' int2str(scan_ID) '_'  noise_model  '_n' int2str(n)   '_T'  int2str(T)   '_p' num2str(p) '_nrExp' int2str(nrExp) ];
 
-% label = regexprep(label, '\.', 'p');  % disp(label);
 disp(label);
 fsData  = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
 fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
-doWork = 0      % = 0 skip (preload from file);  =1 do the work
+doWork = 1;      % = 0 skip (preload from file);  =1 do the work
 allow_preload = 1;
 MANY_AVG=[];  MANY_STD=[];
 
 if doWork == 1 
-    if allow_preload ==1  && exist(fsData, 'file');
+    if allow_preload ==1  && exist(fsData, 'file')
         disp('Allow_preload = 1  and file exists! Just pre-load!');
         load(fsData);
     else
         disp('Allow_preload = 0 or file does not exist. Do work:');
         i=0;
         tic
+        rng(0, 'twister'); % Initialize seed to 0 
+        
         for noise = noises
             i = i+1;  disp(noise);
+            
+            % Performance of each algorithm (RMSE, correlation etc) computed for the optimal 
+            % reg. parameter.
+            
             [avg_metrics , std_metrics] = run_MonteCarlo(n, T, noise_model, noise, p, scan_ID, nrExp);
             MANY_AVG(:,:,i) = avg_metrics;
             MANY_STD(:,:,i) = std_metrics;
@@ -87,9 +85,8 @@ if plot_individual_figs == 1
 end
 
 
-
 %% Multi-plot figure:
-plot_big_picture = 1;
+plot_big_picture = 0;
 if  plot_big_picture == 1
     indivPlotBool = 0;
     figure(8)

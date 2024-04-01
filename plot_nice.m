@@ -60,7 +60,7 @@ elseif indMetric == 7
 end
 
 %% which methods to retain for plotting 
-indexMethods = [2 4];  
+indexMethods = [1 2 3 4 5];  
 
 yminn = [];
 ymaxx = [];
