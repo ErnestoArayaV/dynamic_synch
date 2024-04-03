@@ -97,10 +97,12 @@ MANY_STD;
 
 %% Individual plots
 plot_individual_figs = 1;
+plot_error_bars = 0; % 0/1 for plotting error bars
+
 if plot_individual_figs == 1
     indivPlotBool = 1;
     for indMetric=1:7
-        plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, T_vect, 'T (time)', indivPlotBool, ALGO)
+        plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, T_vect, 'T (time)', indivPlotBool, plot_error_bars, ALGO)
     end
 end
 

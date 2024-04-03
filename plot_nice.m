@@ -1,4 +1,4 @@
-function plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, xaxis_vect, xaxis_label, indivPlotBool, ALGO)
+function plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, xaxis_vect, xaxis_label, indivPlotBool, plot_error_bars, ALGO)
 
 %% MANY_AVG: 3d Tensor capturing averages:  metrics x algos x VaryingDimension (AVG):
          % where the "VaryingDimension" may capture noiseLevels, timePoints, etc
@@ -16,10 +16,14 @@ function plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, xaxis_vec
 %% xaxis_label: label for the x-axis
 %
 %% indivPlotBool: 0/1 whether to create a (new) figure for each plot
+%
+%% plot_error_bars : 0/1 whether to plot error bars
+%
+%%  ALGO: structure containing algorithm related info (which algos are on/off, etc)
 
 %% Example of how to call this function:
-% plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, noises, '\gamma noise level');
-% plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, T_vect, 'T (time)');
+% plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, noises, '\gamma noise level',1 , 1, ALGO);
+% plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, T_vect, 'T (time)', 1, 1, ALGO);
 
 disp('----Generic function for plotting results-----');
 disp(MANY_AVG);
@@ -151,7 +155,7 @@ if plotLegend == 1
     set(h_legend,'FontSize',PARS.myFontLegend);
 end
 
-plot_error_bars = 0;
+
 if plot_error_bars == 1
     hold on;
     for i = indexMethods

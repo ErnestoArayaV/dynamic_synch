@@ -69,7 +69,7 @@ end
 
 %% Set scale for lambda for GTRS 
 if PARS.run_GTRS == 1 
-   PARS.lam_gtrs_scale = 1;
+   PARS.lam_gtrs_scale = 10;
 end
 
 %% smoothness parameters initialization (indepenent of n)

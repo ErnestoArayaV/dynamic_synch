@@ -208,7 +208,7 @@ end
 axis tight;
 yl = ylim;
 
-[yminn ymaxx]
+[yminn ymaxx];
 height = ymaxx - yminn ;
 
 if ~isempty(yminn)  
