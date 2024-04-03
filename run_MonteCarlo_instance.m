@@ -55,19 +55,19 @@ PARS.run_LTRS_GMD = ALGO.run_LTRS_GMD;
 if PARS.run_ppm == 1
    
    % Set scale for lambda for PPM
-   PARS.lam_ppm_scale = 10;
+   PARS.lam_ppm_scale = ALGO.lam_ppm_scale;
    
    %% number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
-    PARS.num_iter_ppm = 10; 
+    PARS.num_iter_ppm = ALGO.num_iter_ppm; 
 
     %% PPM initializer
     % Set to 'SPEC', 'GTRS', 'LTRS-GS', 'LTRS-GMD'
-    PARS.ppm_initializer = 'LTRS-GS';
+    PARS.ppm_initializer = ALGO.ppm_initializer;
 end
 
 %% Set scale for lambda for GTRS 
 if PARS.run_GTRS == 1 
-   PARS.lam_gtrs_scale = 10;
+   PARS.lam_gtrs_scale = ALGO.lam_gtrs_scale;
 end
 
 %% smoothness parameters initialization (indepenent of n)

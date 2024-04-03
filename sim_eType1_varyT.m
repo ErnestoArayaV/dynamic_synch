@@ -31,7 +31,7 @@ if ALGO.run_ppm == 1
    %% Set scale for lambda for PPM
    ALGO.lam_ppm_scale = 1;
    
-   %% number of ppm iterations. Arbitrary for the moment, should be O(log nT) when n, T are large?
+   %% number of ppm iterations. 
     ALGO.num_iter_ppm = 10; 
 
     %% PPM initializer -- set to 'SPEC', 'GTRS', 'LTRS-GS', 'LTRS-GMD'
@@ -40,7 +40,7 @@ end
 
 %% Set scale for lambda for GTRS 
 if ALGO.run_GTRS == 1 
-   ALGO.lam_gtrs_scale = 1;
+   ALGO.lam_gtrs_scale = 5;
 end
 
 %-----------------------------------
@@ -54,7 +54,7 @@ fsData     = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
 fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
 
-doWork = 1;       % = 0 skip (preload from file);  =1 do the work
+doWork = 1;       % = 0 means skip (preload from file);  = 1 means do the work
 allow_preload = 0;
 MANY_AVG=[];  MANY_STD=[];
 

@@ -12,13 +12,13 @@ disp([ 'nrExp=', int2str(nrExp) ] );
 parfor i = 1:nrExp
     rng(randseedoffset+i, 'twister');
     
-%    
+%----------------------------------------------------------------------------------------------    
 % Columns of MTX_metrics(:,:,i) are in order: 
 % [ metrics_spectral  metrics_ppm  metrics_gtrs  metrics_ltrs_gs  metrics_ltrs_gmd];
 %
 % Rows of MTX_metrics(:,:,i) are ordered as: 
 % [corr ; RMSE; corrKend; perc_flips; DAFI; SMOT; optimal beta (via DataFi)]
-%
+%-----------------------------------------------------------------------------------------------
     MTX_metrics(:,:,i) = run_MonteCarlo_instance(n, T, noise_model, noise, p, scan_ID, ALGO);
 end
 
