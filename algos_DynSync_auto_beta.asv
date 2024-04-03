@@ -28,9 +28,9 @@ function [ metrics75mtx ] = algos_DynSync_auto_beta(data, gt, PARS)
 
 disp_metrics_flag = 0;  % turn on/off verbose.
 
-% choice of the grid for searching for best reg. param (both lambda and
-% tau)
-beta_list = [0:2:floor(PARS.T^(2/3)) linspace(floor(PARS.T^(2/3))+1, PARS.T, 5)]; 
+beta_list = [0:1:floor(pow(PARS.T,2/3)) (floor(pow(PARS.T,2/3))_]; % choice of the grid for reg.
+%parameters (HT: wrong choice! Use the one below)
+%beta_list = (linspace(0,1,20)); % Create a grid of T/5 equispaced points between 0 and T
 
 i = 0; % initialize counter for grid
 

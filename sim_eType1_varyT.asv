@@ -16,10 +16,10 @@ addpath(genpath('helpers'));
 addpath(genpath('algos'));
 
 % Grid of time points
-T_vect = 15:15:150;
+T_vect = 15:15:45;
 
 %% set to 0 if we want to disable any single algo
-ALGO.run_spectral = 1;
+ALGO.run_spectral = 0;
 ALGO.run_ppm = 0;
 ALGO.run_GTRS = 1;       
 ALGO.run_LTRS_GS = 1;  

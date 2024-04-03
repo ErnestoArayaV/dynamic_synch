@@ -1,4 +1,4 @@
-function plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, xaxis_vect, xaxis_label, indivPlotBool)
+function plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, xaxis_vect, xaxis_label, indivPlotBool, ALGO)
 
 %% MANY_AVG: 3d Tensor capturing averages:  metrics x algos x VaryingDimension (AVG):
          % where the "VaryingDimension" may capture noiseLevels, timePoints, etc
@@ -60,7 +60,8 @@ elseif indMetric == 7
 end
 
 %% which methods to retain for plotting 
-indexMethods = [1 2 3 4 5];  
+%indexMethods = [1 2 3 4 5];  
+indexMethods = find([ALGO.run_spectral ALGO.run_ppm ALGO.run_GTRS ALGO.run_LTRS_GS  ALGO.run_LTRS_GMD]);
 
 yminn = [];
 ymaxx = [];

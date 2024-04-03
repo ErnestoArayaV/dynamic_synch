@@ -12,9 +12,11 @@
 %
 %% Output: 
 %
-% `metrics', this is a matrix which stores the performance of each
+% `metrics': this is a matrix which stores the performance of each
 % algorithm for the different criteria (corr, rmse etc.) for the specified beta (grid value). 
 % Its size is Nr. of metrics x Nr. of algorithms
+%
+%% Rows of metrics are ordered as [corr ; RMSE; corrKend; perc_flips; DAFI; SMOT ]
 %
 
 function [ metrics ] = algos_DynSync_given_beta(beta_reg, data, gt, PARS)
@@ -50,6 +52,10 @@ PARS.P_tau_n1 = kron(PARS.V_tau, speye(PARS.n - 1));
 
 % Store the performance output for different algorithms for different
 % metrics. Size is Nr. of metrics x Nr. of algorithms
+%
+% Rows of metrics are ordered as [corr ; RMSE; corrKend; perc_flips; DAFI; SMOT ]
+%
+%
 [metrics, ~] = algos_DynSync(data, gt, PARS);  
 metrics = round(metrics,4);
 

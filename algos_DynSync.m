@@ -68,6 +68,8 @@ else
     metrics_ltrs_gmd = NaN(PARS.nrMetrics, 1); 
 end
 
+if PARS.run_ppm == 1 
+    
 %% PPM-DynSync algo: 
 % Set initializer: 'SPEC', 'GTRS', 'LTRS-GS', 'LTRS-GMD'
 
@@ -85,9 +87,9 @@ else
 end
 
 % Run PPM with specified initializer
-if PARS.run_ppm == 1
     g_ppm = algo_ppm_DynSync(data, PARS.E_n1, PARS.T, g_init, PARS.lam_ppm, PARS.num_iter_ppm);
     metrics_ppm  = perf_metrics(g_ppm, gt, PARS);  %  input('xx')
+
 else
     g_ppm = NaN(PARS.n * PARS.T, 1); 
     metrics_ppm = NaN(PARS.nrMetrics, 1); 
