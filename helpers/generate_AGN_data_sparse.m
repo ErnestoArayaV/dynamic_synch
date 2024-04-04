@@ -9,6 +9,8 @@
 % Output: data_mtx      - matrix with data of the form  gt * {gt}^H +sigma*Noise   in sparse format 
 %
 % additive Gaussian noise with sparsity 
+%
+%
 
 function  [ data_mtx, G_union, list_Gk ] = generate_AGN_data_sparse(gt, T, sigma, p)
 
@@ -27,9 +29,9 @@ for k=1:T
     G_union = G_union + G_k;
     
     W = (1/sqrt(2)) * complex(randn(n,n),randn(n,n)); % noise matrix with complex Wigner law
-    W = 1/2 * (W + W'); % Make Hermitian
+    W = (1/sqrt(2)) * (W + W'); % Make Hermitian
     W_k_sparse = W .* G_k; % sparsify noise matrix
-    %% todo - can make faster by first generating the graph and then adding noise only for the existing edges 
+    %% Note: can make faster by first generating the graph and then adding noise only for the existing edges 
     
     % H_k is the complete (full) clean pairwise: 
     H_k = gt( (k-1)*n + 1 : k*n) * gt( (k-1)*n+1 : k*n )';

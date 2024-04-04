@@ -27,11 +27,7 @@
 
 function  [  metrics, sols ] = run_instance(n, T, noise_model, noise, p, scan_ID)
 
-%% HT: commenting this out when using MC runs since the seed is
-%% being set outside this function. Also the path has been set outside as
-%% well.
-
-%rand('state', 123);  
+rng(0, 'twister'); % Initialize seed to 0  
 
 addpath(genpath('helpers'));
 addpath(genpath('algos'));

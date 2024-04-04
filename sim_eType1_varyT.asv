@@ -1,8 +1,8 @@
-%-------------------------------------------------------------------------------------------
 %%  eType1:  fix n, noise, noise_model, p, scan_ID, (and nrExp).  Vary T
-%
+
 %% Inputs:
 % n : size of the graph at each time point
+% T : the number of time points
 % noise: sigma for Wigner model and 1 - eta for outliers model 
 % noise_model: {Wigner, outlier} 
 % p: Graph sparsity (it should be 1 in Wigner model)
@@ -17,16 +17,15 @@
 %
 %% Output: 
 %
-% The .mat file is saved in the DATA_{scan_Id} folder. The plots are saved
-% in the PLOTS_{scanId} folder.
+% The .mat file is saved in the DATA_{scan_I}
 %
 %% Example
-%
+
 %% Run_1:   sim_eType1_varyT(30, 'wigner', 3,  1,  1, 25)  
 %% Run_2:   sim_eType1_varyT(30, 'wigner', 3,  1,  2, 25)   
 %% Run_3:   sim_eType1_varyT(30, 'outlier', 0.2, 0.2, 1, 25);
-%
-%------------------------------------------------------------------------------------------
+
+% scan_ID \in {1,2,3};  % create a folder for each experimental setup (smoothness level)
 
 function [ ] =  sim_eType1_varyT(n, noise_model, noise, p, scan_ID, nrExp)
 
@@ -87,7 +86,6 @@ if doWork == 1
         i=0;
         tic
         rng(0, 'twister'); % Initialize seed to 0 
-        
         for iT = T_vect
             i = i+1;  disp(iT);
             
