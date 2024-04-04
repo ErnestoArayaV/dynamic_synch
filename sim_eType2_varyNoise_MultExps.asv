@@ -1,0 +1,5 @@
+%% Simulations to study performance of algorithms for different noise levels
+%
+%% sim_eType2_varyNoise(n, T, noise_model, p, scan_ID, nrExp)
+
+sim_eType2_varyNoise(30, 20, 'wigner', 1, 1, 20)

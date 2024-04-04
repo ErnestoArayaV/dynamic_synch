@@ -80,7 +80,7 @@ fsData  = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
 fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
 doWork = 1;      % = 0 means skip (preload from file);  = 1 means do the work
-allow_preload = 1;
+allow_preload = 0;
 MANY_AVG=[];  MANY_STD=[];
 
 if doWork == 1 

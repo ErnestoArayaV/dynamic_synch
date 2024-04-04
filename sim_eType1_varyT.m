@@ -130,6 +130,8 @@ end
 
 %% Multi-plot figure:
 plot_big_picture = 0;
+plot_error_bars = 0; % 0/1 for plotting error bars
+
 if  plot_big_picture == 1
     indivPlotBool = 0;
     figure(8)
