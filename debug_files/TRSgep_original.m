@@ -17,20 +17,18 @@ MM1 = [sparse(n,n) B;B sparse(n,n)];
 else
 MM1 = [zeros(n) B;B zeros(n)];    
 end
-tolhardcase = 1e-4; % tolerance for hard-case. EA: I changed the tolerance from 1e-4 to avoid 'hard case' and crashes.
+tolhardcase = 1e-4; % tolerance for hard-case
 
-% %EA: I comment this out to focus on boundary solutions
-% p1 = pcg(A,-a,1e-12, 500); % possible interior solution
-% if norm(A*p1+a)/norm(a)<1e-5,
-%     if p1'*B*p1>=Del^2, p1 = nan;
-%     end
-% else
-%     p1 = nan;
-% end
-%
+p1 = pcg(A,-a,1e-12, 500); % possible interior solution
+if norm(A*p1+a)/norm(a)<1e-5,
+if p1'*B*p1>=Del^2, p1 = nan;
+end
+else
+    p1 = nan;
+    end
 
 % This is the core of the code
-[V,lam1,~] = eigs(@(x)MM0timesx(A,B,a,Del,x),2*n,-MM1,1,'lr'); %EA: I put a flag to avoid convergence message.  
+[V,lam1] = eigs(@(x)MM0timesx(A,B,a,Del,x),2*n,-MM1,1,'lr'); 
 
     if norm(real(V)) < 1e-3 %sometimes complex
         V = imag(V);    else        V = real(V);
@@ -47,11 +45,11 @@ if normx < tolhardcase % hard case
 x1 = V(length(A)+1:end);
 alpha1 = lam1;
 Pvect = x1;  %first try only k=1, almost always enough
-[x2,~] = pcg(@(x)pcgforAtilde(A,B,lam1,Pvect,alpha1,x),-a,1e-12,500); %EA: I put a flag here to avoid convergence messages.
+x2 = pcg(@(x)pcgforAtilde(A,B,lam1,Pvect,alpha1,x),-a,1e-12,500);
 if norm((A+lam1*B)*x2+a)/norm(a)>tolhardcase, % large residual, repeat
     for ii = 3*[1:3]
     [Pvect,DD] = eigs(A,B,ii,'sa');
-    [x2,~] = pcg(@(x)pcgforAtilde(A,B,lam1,Pvect,alpha1,x),-a,1e-8,500); %EA: idem   
+    x2 = pcg(@(x)pcgforAtilde(A,B,lam1,Pvect,alpha1,x),-a,1e-8,500);    
     if norm((A+lam1*B)*x2+a)/norm(a) < tolhardcase, break, end
     end
 end
@@ -61,14 +59,13 @@ alp = (-bb+sqrt(bb^2-4*aa*cc))/(2*aa); %norm(x2+alp*x)-Delta
 x = x2+alp*x1;
 end
 
+% choose between interior and boundary 
 
-% % choose between interior and boundary
-% 
-% % if sum(isnan(p1))==0,
-% % if (p1'*A*p1)/2+a'*p1 < (x'*A*x)/2+a'*x, 
-% %     x = p1; lam1 = 0;
-% % end
-% % end
+if sum(isnan(p1))==0,
+if (p1'*A*p1)/2+a'*p1 < (x'*A*x)/2+a'*x, 
+    x = p1; lam1 = 0;
+end
+end
 end
 
 

@@ -47,7 +47,7 @@ PARS.run_spectral = 0;
 PARS.run_ppm = 0;
 PARS.run_GTRS = 1;       
 PARS.run_LTRS_GS = 1;  
-PARS.run_LTRS_GMD = 1;   
+PARS.run_LTRS_GMD = 0;   
 
 %% Set PPM related parameters
 if PARS.run_ppm == 1
@@ -65,7 +65,7 @@ end
 
 %% Set scale for lambda for GTRS 
 if PARS.run_GTRS == 1 
-   PARS.lam_gtrs_scale = 10;
+   PARS.lam_gtrs_scale = 5;
 end
 
 %% smoothness parameters initialization (indepenent of n)

@@ -30,7 +30,7 @@ disp_metrics_flag = 0;  % turn on/off verbose.
 
 % choice of the grid for searching for best reg. param (both lambda and
 % tau)
-beta_list = [0:2:floor(PARS.T^(2/3)) linspace(floor(PARS.T^(2/3))+1, PARS.T, 5)]; 
+beta_list = unique([0:1:floor(PARS.T^(1/2)) floor(linspace(floor(PARS.T^(1/2)),floor(PARS.T^(2/3)),5)) floor(linspace(floor(PARS.T^(2/3)), PARS.T, 5))]); 
 
 i = 0; % initialize counter for grid
 

@@ -67,7 +67,7 @@ end
 
 %% Set scale for lambda for GTRS 
 if ALGO.run_GTRS == 1 
-   ALGO.lam_gtrs_scale = 5;
+   ALGO.lam_gtrs_scale = 10;
 end
 
 
