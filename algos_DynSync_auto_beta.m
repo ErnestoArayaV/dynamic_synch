@@ -181,7 +181,7 @@ yellow      = [ 1 1 0];
 orange      = [1 0.5 0]; % 5
 green       = [ 0 1 0 ]; % 6
 magenta     = [1, 0, 1]; % BTL 
-colorspec   = {red; magenta; green; orange; blue} % ; green; magenta; black; blue
+colorspec   = {red; magenta; green; orange; blue}; % ; green; magenta; black; blue
 
 % rowNames = {'aa', 'bb', 'RS','LS', 'SER' ,'GLM','RC'};
 
@@ -241,7 +241,7 @@ end
 
 set(gcf,'PaperPositionMode','auto');
 
-set(gca,'LooseInset',get(gca,'TightInset'))
+set(gca,'LooseInset',get(gca,'TightInset'));
 
 plotFolder = [ plotFolder  '_'  fsStat ];
 fs = [ plotFolder '' extraDesc ];

@@ -27,12 +27,12 @@ function plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, xaxis_vec
 
 disp('----Generic function for plotting results-----');
 disp(MANY_AVG);
-size(MANY_AVG)   % metrics by algos by xaxis_vect
+size(MANY_AVG);   % metrics by algos by xaxis_vect
 MTXSTATS = permute(MANY_AVG,[1 2 3]);
 % MTXSTATS   %  algos -by- metrics -by- xaxis_vect 
-size(MTXSTATS) 
+size(MTXSTATS); 
 
-showtitle = 1
+showtitle = 1;
 log_scale = 0;
 plotLegend = 1;
 extraDesc = '';
