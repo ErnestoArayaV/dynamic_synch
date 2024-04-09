@@ -162,7 +162,7 @@ ALL = [beta_list' MTX2D];
 % Recall the ordering from algos
 %  metrics = [ metrics_spectral  metrics_ppm  metrics_gtrs  metrics_ltrs_gs  metrics_ltrs_gmd ];
 
-legList = {'Spectral', 'PPM',    'GTRS',    'LTRS-GS',    'LTRS-GMD' };
+legList = {'Spectral', 'PPM',    'GTRS',    'LTRS-GS',    'GMD-LTRS' };
 colMethods = {  '-g.', '-r.',  '-m.',  '-c.', '-b.'};  %,  '-m.' ,  '-k.'  ,  '-or', '-ob'                
 linespec = { '-', '-',  '-',  '-', '-' };
 markers = {'+','o','*','d','x'}; % ,'s','.','p','h'
