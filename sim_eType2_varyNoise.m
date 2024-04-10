@@ -46,11 +46,11 @@ else
 end
 
 %% set to 0 if we want to disable any single algo
-ALGO.run_spectral = 1;
+ALGO.run_spectral = 0;
 ALGO.run_ppm = 1;
 ALGO.run_GTRS = 0;       
 ALGO.run_LTRS_GS = 0;  
-ALGO.run_LTRS_GMD = 0;  
+ALGO.run_LTRS_GMD = 1;  
 
 %% Set PPM related parameters
 if ALGO.run_ppm == 1
@@ -62,7 +62,7 @@ if ALGO.run_ppm == 1
     ALGO.num_iter_ppm = 10; 
 
     %% PPM initializer -- set to 'SPEC', 'GTRS', 'LTRS-GS', 'LTRS-GMD'
-    ALGO.ppm_initializer = 'SPEC';
+    ALGO.ppm_initializer = 'LTRS-GMD';
 end
 
 %% Set scale for lambda for GTRS 
