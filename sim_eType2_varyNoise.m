@@ -49,8 +49,8 @@ end
 ALGO.run_spectral = 0;
 ALGO.run_ppm = 1;
 ALGO.run_GTRS = 0;       
-ALGO.run_LTRS_GS = 0;  
-ALGO.run_LTRS_GMD = 1;  
+ALGO.run_LTRS_GS = 1;  
+ALGO.run_LTRS_GMD = 0;  
 
 %% Set PPM related parameters
 if ALGO.run_ppm == 1
@@ -62,7 +62,7 @@ if ALGO.run_ppm == 1
     ALGO.num_iter_ppm = 10; 
 
     %% PPM initializer -- set to 'SPEC', 'GTRS', 'LTRS-GS', 'LTRS-GMD'
-    ALGO.ppm_initializer = 'LTRS-GMD';
+    ALGO.ppm_initializer = 'LTRS-GS';
 end
 
 %% Set scale for lambda for GTRS 
