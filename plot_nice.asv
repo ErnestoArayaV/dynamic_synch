@@ -132,8 +132,8 @@ for i = indexMethods
         hold on;
     elseif plot_error_bars ==1
         err = MTX_STD_ALL(:,1+i);
-        scaling_coeff = 1
-        % scaling_coeff = 0.25;
+        % scaling_coeff = 1
+        scaling_coeff = 0.5;
         err = scaling_coeff * err;  
         % errorbar(ALL(:,1),ALL(:,1+i), err, 'vertical', 'o', "MarkerEdgeColor", Plot_color);
         % "-s","MarkerSize",10, "MarkerEdgeColor","blue","MarkerFaceColor",[0.65 0.85 0.90]
@@ -141,7 +141,7 @@ for i = indexMethods
              'Marker', markers{i}, 'LineWidth', 3, ...
              "MarkerSize",10,  'Color',Plot_color,  ...
              "MarkerEdgeColor",Plot_color,  "MarkerFaceColor",Plot_color, ... 
-             "CapSize",30);
+             "CapSize",30)
         hold on;
     end
 end

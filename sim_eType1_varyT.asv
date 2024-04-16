@@ -32,7 +32,7 @@
 %         scan_ID1_outlier_n30_noise0.2_p0.2_nrExp20
 %         scan_ID1_wigner_n30_noise3_p1_nrExp20
 % sim_eType1_varyT(30, 'outlier', 0.2, 0.2, 1, 20);
-% sim_eType1_varyT(30, 'wigner',   3,   1, 1, 20);
+% sim_eType1_varyT(30, 'wigner',   3,   1, 20);
 
 function [ ] =  sim_eType1_varyT(n, noise_model, noise, p, scan_ID, nrExp)
 

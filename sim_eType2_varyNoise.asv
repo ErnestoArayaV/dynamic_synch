@@ -30,7 +30,7 @@
 %    scan_ID1_outlier_n30_T100_p0.2_nrExp20.mat
 %    scan_ID1_wigner_n30_T100_p1_nrExp20.mat
 
-% sim_eType2_varyNoise(30, 100, 'outlier', 0.2, 1, 20);
+% sim_eType2_varyNoise(30, 100, 'wigner', 1, 1, 20);
 % sim_eType2_varyNoise(30, 100, 'wigner', 1, 1, 20);
 
 function [ ] =  sim_eType2_varyNoise(n, T, noise_model, p, scan_ID, nrExp)
@@ -125,7 +125,7 @@ plot_error_bars = 0; % 0/1 for plotting error bars
 
 if plot_individual_figs == 1
     indivPlotBool = 1;
-    for indMetric=2:2
+    for indMetric=1:1
         plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, noises, '\gamma noise level', indivPlotBool, plot_error_bars, ALGO)
     end
 end

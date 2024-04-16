@@ -36,3 +36,8 @@ Matlab files with proposed dynamic synchronization algorithms.
 7. TRSgep (trs solver, coded by Yuji Nakatsukasa).
                   
                                                                 
+
+========================================================================
+(i) look at the plot_nice function to fix the error bar generation, 
+(ii) test the read from mat file option is working. 
+- use the sim_etype_varyT.m file to test the above
