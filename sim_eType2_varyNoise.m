@@ -52,11 +52,11 @@ else
 end
 
 %% set to 0 if we want to disable any single algo
-ALGO.run_spectral = 0;
-ALGO.run_ppm = 1;
+ALGO.run_spectral = 1;
+ALGO.run_ppm = 0;
 ALGO.run_GTRS = 1;       
-ALGO.run_LTRS_GS = 0;  
-ALGO.run_LTRS_GMD = 0;  
+ALGO.run_LTRS_GS = 1;  
+ALGO.run_LTRS_GMD = 1;  
 
 %% Set PPM related parameters
 if ALGO.run_ppm == 1
@@ -82,15 +82,22 @@ label_nice = [ 'siD' int2str(scan_ID) ': ' noise_model ': n=' int2str(n) ', T=' 
 label      = [ 'scan_ID' int2str(scan_ID) '_'  noise_model  '_n' int2str(n)   '_T'  int2str(T)   '_p' num2str(p) '_nrExp' int2str(nrExp) ];
 
 disp(label);
+
 fsData  = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
 fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
-doWork = 0;
+% fsData     = [ 'DATA/DATA_'   int2str(scan_ID)  '/metrics_versus_noise_all/lambda_10/' label];    
+% disp(fsData);
+% fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/metrics_versus_noise_all/lambda_10/error_bars/' label]; 
+% disp(fsPlots);
+
+
+doWork = 1;
 MANY_AVG=[];  MANY_STD=[];
 
 if doWork==0 && ( exist(fsData,'file')==2 || exist([fsData '.mat'],'file')==2)
     disp('doWork = 0 and file exists! Just pre-load!');
-    load(fsData);
+    load([fsData '.mat']);
 else
     disp('doWork = 1 or file is missing. Do work:');
     i=0;
@@ -101,6 +108,8 @@ else
         i = i+1;  disp(noise);
         % Performance of each algorithm (RMSE, correlation etc) computed for the optimal
         % reg. parameter.
+        % Rows of metrics are ordered as: 
+        % [corr ; RMSE; corrKend; perc_flips; DAFI; SMOT; optimal beta (via DataFi)]
         [avg_metrics , std_metrics] = run_MonteCarlo(n, T, noise_model, noise, p, scan_ID, nrExp, ALGO);
         MANY_AVG(:,:,i) = avg_metrics;
         MANY_STD(:,:,i) = std_metrics;
@@ -121,16 +130,16 @@ MANY_STD;
 
 %% Individual plots
 plot_individual_figs = 1;
-plot_error_bars = 0; % 0/1 for plotting error bars
+plot_error_bars = 1; % 0/1 for plotting error bars
 
 if plot_individual_figs == 1
     indivPlotBool = 1;
-    for indMetric=2:2
+    
+    % for indMetric=1:7 %% Plot the 7 metrics or choose a subset of them
+    for indMetric=1:2 % Plot Corr and RMSE
         plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, noises, '\gamma noise level', indivPlotBool, plot_error_bars, ALGO)
     end
 end
-
-return
 
 %% Multi-plot figure:
 plot_big_picture = 0;

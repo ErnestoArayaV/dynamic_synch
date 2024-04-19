@@ -29,8 +29,8 @@
 %------------------------------------------------------------------------------------------
 
 % Mihai 15 Apr 2024:    (mat files existing): for testing:
-%         scan_ID1_outlier_n30_noise0.2_p0.2_nrExp20
-%         scan_ID1_wigner_n30_noise3_p1_nrExp20
+% scan_ID1_outlier_n30_noise0.2_p0.2_nrExp20
+% scan_ID1_wigner_n30_noise3_p1_nrExp20
 % sim_eType1_varyT(30, 'outlier', 0.2, 0.2, 1, 20);
 % sim_eType1_varyT(30, 'wigner',   3,   1, 1, 20);
 
@@ -67,7 +67,7 @@ end
 
 %% Set scale for lambda for GTRS 
 if ALGO.run_GTRS == 1 
-   ALGO.lam_gtrs_scale = 10;
+   ALGO.lam_gtrs_scale = 1;
 end
 
 %-----------------------------------
@@ -77,17 +77,20 @@ label_nice = [ 'siD' int2str(scan_ID) ': ' noise_model ': n=' int2str(n) ', nois
 label      = [ 'scan_ID' int2str(scan_ID) '_'  noise_model  '_n' int2str(n)   '_noise'  num2str(noise)   '_p' num2str(p) '_nrExp' int2str(nrExp) ];
 
 disp(label);
+
 fsData     = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
 fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
-% fsDataMat = [ fsData '.mat']
+%fsData     = [ 'DATA/DATA_'   int2str(scan_ID)  '/metrics_versus_T_all/lambda_10/' label];     disp(fsData);
+%fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/metrics_versus_T_all/lambda_10/error_bars/' label];     disp(fsPlots);
 
-doWork = 0;  % = 0 means skip (preload from file);  = 1 means do the work
+
+doWork = 1;  % = 0 means skip (preload from file);  = 1 means do the work
 MANY_AVG=[];  MANY_STD=[];
 
 if doWork==0 && ( exist(fsData,'file')==2 || exist([fsData '.mat'],'file')==2)
     disp('doWork = 0 and file exists! Just pre-load!');
-    load(fsData);
+    load([fsData '.mat']);
 else
     disp('doWork = 1 or file is missing. Do work:');
     i=0;
@@ -98,6 +101,10 @@ else
         i = i+1;  disp(iT);
         % Performance of each algorithm (RMSE, correlation etc) computed
         % for the optimal reg. parameter.
+        %
+        % Rows of metrics are ordered as: 
+        % [corr ; RMSE; corrKend; perc_flips; DAFI; SMOT; optimal beta (via DataFi)]
+        %
         [avg_metrics , std_metrics] = run_MonteCarlo(n, iT, noise_model, noise, p, scan_ID, nrExp, ALGO);
         MANY_AVG(:,:,i) = avg_metrics;
         MANY_STD(:,:,i) = std_metrics;
@@ -108,11 +115,6 @@ else
     disp(['Saved all data to file: '  fsData ] );
 end
 
-% try
-%     load(fsData);
-% catch ME;
-%     disp(['File not found : '  fsData ] );
-% end
 
 %% metrics x algos x varying-parameter (T, noise level etc.)   (AVG):
 disp('MANY_AVG:');
@@ -128,13 +130,12 @@ plot_error_bars = 1; % 0/1 for plotting error bars
 
 if plot_individual_figs == 1
     indivPlotBool = 1;
-    % for indMetric=1:7
-    for indMetric=2:2
+     for indMetric=1:7 %% Plot the 7 metrics or choose a subset of them
+    %for indMetric=1:2 % Plot Corr and RMSE
         plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, T_vect, 'T (time)', indivPlotBool, plot_error_bars, ALGO)
     end
 end
 
-return
 
 %% Multi-plot figure:
 plot_big_picture = 0;

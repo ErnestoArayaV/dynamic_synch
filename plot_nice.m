@@ -120,7 +120,6 @@ if log_scale == 1
 end
 
 
-plot_error_bars = 1
 for i = indexMethods
     Plot_color = colorspec{i};
     % plot(ALL(:,1),ALL(:,1+i), 'LineStyle', linespec{i},  'Marker', markers{i}, 'LineWidth', 3, 'MarkerSize',15,   'Color', Plot_color); hold on;
