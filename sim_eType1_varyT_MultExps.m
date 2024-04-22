@@ -26,14 +26,8 @@ sim_eType1_varyT(30, 'wigner', 1,  1,  1, 20);
 sim_eType1_varyT(30, 'wigner', 1,  1,  2, 20);
 sim_eType1_varyT(30, 'wigner', 1,  1,  3, 20);
 
-sim_eType1_varyT(30, 'wigner', 0.5,  1,  1, 20);  
-sim_eType1_varyT(30, 'wigner', 0.5,  1,  2, 20);
-sim_eType1_varyT(30, 'wigner', 0.5,  1,  3, 20);
 
-sim_eType1_varyT(30, 'outlier', 0.05, 0.2, 1, 20);
-sim_eType1_varyT(30, 'outlier', 0.05, 0.2, 2, 20);
-sim_eType1_varyT(30, 'outlier', 0.05, 0.2, 3, 20);
+sim_eType1_varyT(30, 'outlier', 0.1, 0.2, 1, 20);
+sim_eType1_varyT(30, 'outlier', 0.1, 0.2, 2, 20);
+sim_eType1_varyT(30, 'outlier', 0.1, 0.2, 3, 20);
 
-sim_eType1_varyT(30, 'outlier', 0.01, 0.2, 1, 20);
-sim_eType1_varyT(30, 'outlier', 0.01, 0.2, 2, 20);
-sim_eType1_varyT(30, 'outlier', 0.01, 0.2, 3, 20);

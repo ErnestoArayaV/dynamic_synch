@@ -73,7 +73,7 @@ end
 
 %% Set scale for lambda for GTRS 
 if ALGO.run_GTRS == 1 
-   ALGO.lam_gtrs_scale = 10;
+   ALGO.lam_gtrs_scale = 5;
 end
 
 
@@ -135,8 +135,8 @@ plot_error_bars = 1; % 0/1 for plotting error bars
 if plot_individual_figs == 1
     indivPlotBool = 1;
     
-    % for indMetric=1:7 %% Plot the 7 metrics or choose a subset of them
-    for indMetric=1:2 % Plot Corr and RMSE
+    for indMetric=1:7 %% Plot the 7 metrics or choose a subset of them
+    %for indMetric=1:2 % Plot Corr and RMSE
         plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, noises, '\gamma noise level', indivPlotBool, plot_error_bars, ALGO)
     end
 end

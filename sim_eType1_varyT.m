@@ -45,6 +45,7 @@ addpath(genpath('DATA'));
 % Grid of time points
 T_vect = 10:10:100; 
 
+
 %% set to 0 if we want to disable any single algo
 ALGO.run_spectral = 1;
 ALGO.run_ppm = 0;
@@ -67,7 +68,7 @@ end
 
 %% Set scale for lambda for GTRS 
 if ALGO.run_GTRS == 1 
-   ALGO.lam_gtrs_scale = 1;
+   ALGO.lam_gtrs_scale = 5;
 end
 
 %-----------------------------------
