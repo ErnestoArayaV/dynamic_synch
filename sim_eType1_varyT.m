@@ -127,7 +127,7 @@ MANY_STD;
 
 %% Individual plots
 plot_individual_figs = 1;
-plot_error_bars = 1; % 0/1 for plotting error bars
+plot_error_bars = 0; % 0/1 for plotting error bars
 
 if plot_individual_figs == 1
     indivPlotBool = 1;

@@ -83,16 +83,16 @@ label      = [ 'scan_ID' int2str(scan_ID) '_'  noise_model  '_n' int2str(n)   '_
 
 disp(label);
 
-fsData  = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
-fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
+% fsData  = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
+% fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
-% fsData     = [ 'DATA/DATA_'   int2str(scan_ID)  '/metrics_versus_noise_all/lambda_10/' label];    
-% disp(fsData);
-% fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/metrics_versus_noise_all/lambda_10/error_bars/' label]; 
-% disp(fsPlots);
+fsData     = [ 'DATA/DATA_'   int2str(scan_ID)  '/metrics_versus_noise_all/lambda_5/' label];    
+disp(fsData);
+fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/metrics_versus_noise_all/lambda_5/no_error_bars/' label]; 
+disp(fsPlots);
 
 
-doWork = 1;
+doWork = 0;
 MANY_AVG=[];  MANY_STD=[];
 
 if doWork==0 && ( exist(fsData,'file')==2 || exist([fsData '.mat'],'file')==2)
@@ -130,13 +130,13 @@ MANY_STD;
 
 %% Individual plots
 plot_individual_figs = 1;
-plot_error_bars = 1; % 0/1 for plotting error bars
+plot_error_bars = 0; % 0/1 for plotting error bars
 
 if plot_individual_figs == 1
     indivPlotBool = 1;
     
-    for indMetric=1:7 %% Plot the 7 metrics or choose a subset of them
-    %for indMetric=1:2 % Plot Corr and RMSE
+    %for indMetric=1:7 %% Plot the 7 metrics or choose a subset of them
+    for indMetric=1:2 % Plot Corr and RMSE
         plot_nice(MANY_AVG, MANY_STD, fsPlots, label_nice, indMetric, noises, '\gamma noise level', indivPlotBool, plot_error_bars, ALGO)
     end
 end
