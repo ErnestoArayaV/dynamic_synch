@@ -67,24 +67,24 @@ end
 figure(1);  clf;  
 
 % Plot correlation versus beta for each algorithm
-corrMtx = squeeze(MTX_metrics(1, : , :))';
-subplot(2,2,1);
-plot_nice_auto_beta(corrMtx, '', 1, '', beta_list, PARS);
+% corrMtx = squeeze(MTX_metrics(1, : , :))';
+% subplot(2,2,1);
+% plot_nice_auto_beta(corrMtx, '', 1, '', beta_list, PARS);
 
 % Plot RMSE versus beta for each algorithm
-subplot(2,2,2);
+subplot(2,1,1);
 rmseMtx = squeeze(MTX_metrics(2, : , :))';
 plot_nice_auto_beta(rmseMtx, '', 2 , '', beta_list, PARS);
 
 % Plot data fidelity versus beta for each algorithm
-subplot(2,2,3);
+subplot(2,1,2);
 dafiMtx = squeeze(MTX_metrics(5, : , :))';
 plot_nice_auto_beta(dafiMtx, '', 5 , '', beta_list, PARS);
 
 % Plot smoothness of solution versus beta for each algorithm
-subplot(2,2,4);
-smotMtx = squeeze(MTX_metrics(6, : , :))';
-plot_nice_auto_beta(smotMtx, '', 6 , '', beta_list, PARS);
+% subplot(2,2,4);
+% smotMtx = squeeze(MTX_metrics(6, : , :))';
+% plot_nice_auto_beta(smotMtx, '', 6 , '', beta_list, PARS);
 
 %
 % Return the performance metrics corresponding to the optimal beta for each

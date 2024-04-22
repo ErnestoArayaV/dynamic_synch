@@ -43,11 +43,11 @@ addpath(genpath('PLOTS'));
 addpath(genpath('DATA'));
 
 % Grid of time points
-T_vect = 10:10:100; 
+T_vect = [20 100]; %10:10:100; 
 
 
 %% set to 0 if we want to disable any single algo
-ALGO.run_spectral = 1;
+ALGO.run_spectral = 0;
 ALGO.run_ppm = 0;
 ALGO.run_GTRS = 1;       
 ALGO.run_LTRS_GS = 1;  
@@ -79,14 +79,14 @@ label      = [ 'scan_ID' int2str(scan_ID) '_'  noise_model  '_n' int2str(n)   '_
 
 disp(label);
 
-% fsData     = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
-% fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
+fsData     = [ 'DATA/DATA_'   int2str(scan_ID) '/' label ];     disp(fsData);
+fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/' label ];     disp(fsPlots);
 
-fsData     = [ 'DATA/DATA_'   int2str(scan_ID)  '/metrics_versus_T_all/lambda_5/' label];     disp(fsData);
-fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/metrics_versus_T_all/lambda_5/no_error_bars/' label];     disp(fsPlots);
+% fsData     = [ 'DATA/DATA_'   int2str(scan_ID)  '/metrics_versus_T_all/lambda_5/' label];     disp(fsData);
+% fsPlots = [ 'PLOTS/PLOTS_' int2str(scan_ID) '/metrics_versus_T_all/lambda_5/no_error_bars/' label];     disp(fsPlots);
 
 
-doWork = 0;  % = 0 means skip (preload from file);  = 1 means do the work
+doWork = 1;  % = 0 means skip (preload from file);  = 1 means do the work
 MANY_AVG=[];  MANY_STD=[];
 
 if doWork==0 && ( exist(fsData,'file')==2 || exist([fsData '.mat'],'file')==2)
